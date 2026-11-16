@@ -26,6 +26,7 @@ export 'errors/ugym_api_error.dart';
 export 'formatting/date_formatter.dart';
 export 'formatting/money_formatter.dart';
 export 'formatting/weight_formatter.dart';
+export 'network/ugym_health_service.dart';
 export 'network/ugym_http_client.dart';
 export 'network/ugym_interceptors.dart';
 export 'storage/token_storage.dart';

@@ -220,4 +220,33 @@ void main() {
       expect(mapped.isNetworkError, isTrue);
     });
   });
+
+  group('UgymHealthService', () {
+    test('checks /health without auth header and parses status', () async {
+      final client = UgymHttpClient(
+        baseUrl: 'https://api.ugym.tj/api/v1',
+        tokenStorage: InMemoryTokenStorage(initialToken: 'secret-token'),
+      );
+      final adapter = _FakeAdapter(
+        (_) async => _jsonResponse(200, <String, Object?>{
+          'app': 'ok',
+          'database': 'ok',
+          'redis': 'ok',
+        }),
+      );
+      client.dio.httpClientAdapter = adapter;
+
+      final service = UgymHealthService(httpClient: client);
+      final status = await service.check();
+
+      expect(status.isHealthy, isTrue);
+      expect(status.app, 'ok');
+      expect(status.database, 'ok');
+      expect(status.redis, 'ok');
+      expect(
+        adapter.capturedRequests.single.headers.containsKey('Authorization'),
+        isFalse,
+      );
+    });
+  });
 }

@@ -8,9 +8,9 @@
 
 - **`C0-01`–`C0-05`**: пакет `ugym_core` полностью готов как базовое ядро для `uGym` и `uGym Business`:
   - **uCraft Design System 1.0** (`material_ui: ^1.1.0`, `D-003`): токены (`UcraftColors` Light/Dark `ThemeExtension`, `UcraftTypography`, `UcraftSpacing`, `UcraftRadius`, `UcraftElevation`, `UcraftMotion`), темы `UcraftTheme.light()` / `UcraftTheme.dark()`, компоненты (`UcraftButton`, `UcraftCard`, `UcraftTextField`, `UcraftLoadingState`, `UcraftEmptyState`, `UcraftErrorState`).
-  - **Сетевое ядро и хранилище**: `UgymHttpClient`, `UgymNetworkInterceptor` (`Auth`, `Accept-Language`, `X-Request-Id`, `Idempotency-Key`, колбэки `401`/`SUBSCRIPTION_EXPIRED`), `UgymApiException` + `UgymErrorMapper`, `TokenStorage` (`SecureTokenStorage`, `InMemoryTokenStorage`).
+  - **Сетевое ядро и хранилище**: `UgymHttpClient`, `UgymHealthService` (`GET /api/v1/health`), `UgymNetworkInterceptor` (`Auth`, `Accept-Language`, `X-Request-Id`, `Idempotency-Key`, колбэки `401`/`SUBSCRIPTION_EXPIRED`), `UgymApiException` + `UgymErrorMapper`, `TokenStorage` (`SecureTokenStorage`, `InMemoryTokenStorage`).
   - **Форматтеры**: `MoneyFormatter` (`minorUnits` → `TJS`), `WeightFormatter` (`grams` ↔ `кг`, 1RM Эпли), `DateFormatter` (`UTC` → `Asia/Dushanbe`, минутные окна `HH:MM`).
-- Все проверки пройдены: `dart format` ✓, `flutter analyze` ✓ (`No issues found!`), `flutter test` ✓ (`33 passed`).
+- Все проверки пройдены: `dart format` ✓, `flutter analyze` ✓ (`No issues found!`), `flutter test` ✓ (`34 passed`).
 
 ## Точный следующий шаг
 
