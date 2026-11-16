@@ -8,8 +8,10 @@ environment:
   flutter: ">=3.24.0"
 
 dependencies:
+  dio: ^5.11.1
   flutter:
     sdk: flutter
+  flutter_secure_storage: ^11.2.0
 
 dev_dependencies:
   flutter_test:
