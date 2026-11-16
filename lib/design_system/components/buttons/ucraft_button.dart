@@ -234,4 +234,3 @@ final class UcraftButton extends StatelessWidget {
     return BorderSide.none;
   }
 }
-
