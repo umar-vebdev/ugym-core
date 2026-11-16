@@ -1,6 +1,6 @@
 # ugym_core — чек-лист задач
 
-**Текущий этап:** C0 — Фундамент общего пакета
+**Текущий этап:** C0 — Фундамент общего пакета (завершён)
 **Статусы:** `[ ]` не начата · `[~]` в работе · `[x]` готова · `[!]` заблокирована (причина в заметках)
 
 ## Правила ведения файла
@@ -18,12 +18,10 @@
 - [x] **C0-03a** Реализованы компоненты `UcraftButton` (`primary`/`secondary`/`tertiary`/`destructive`, `default`/`pressed`/`focused`/`disabled`/`loading` с блокировкой повторов и сохранением ширины, тач-таргет `>=48x48dp`) и `UcraftCard` (`standard`/`highlight`/`onTap` без теней с границей 1dp); 16 тестов зелёные в Light/Dark (`format ✓`, `analyze ✓`, `test ✓`).
 - [x] **C0-03b** Реализованы `UcraftTextField` (высота `>=52dp`, радиус `8dp`, состояния ошибки с иконкой+текстом, успеха, `disabled` и `readOnly`) и виджеты асинхронных состояний (`UcraftLoadingState` спиннер/скелетон, `UcraftEmptyState`, `UcraftErrorState`); 22 теста зелёные в Light/Dark (`format ✓`, `analyze ✓`, `test ✓`).
 - [x] **C0-04** Добавлены зависимости `dio` и `flutter_secure_storage` (`D-002`); реализованы `TokenStorage` (`SecureTokenStorage` / `InMemoryTokenStorage`), `UgymApiException` и `UgymErrorMapper` (`{error: {code, message, details}}`, `errors`, сетевые таймауты), `UgymUuid.v4()`, `UgymNetworkInterceptor` (`Auth`, `Accept-Language`, `X-Request-Id`, `Idempotency-Key`, колбэки `401`/`SUBSCRIPTION_EXPIRED`) и `UgymHttpClient`; 27 тестов зелёные (`format ✓`, `analyze ✓`, `test ✓`).
+- [x] **C0-05** Реализованы форматтеры `MoneyFormatter` (`minorUnits` → `TJS` + точный парсинг без float-погрешностей), `WeightFormatter` (`grams` ↔ `кг` + расчёт 1RM по формуле Эпли) и `DateFormatter` (`UTC` → `Asia/Dushanbe` / целевая TZ, минутные окна `0..1439` → `HH:MM`); 33 теста зелёные (`format ✓`, `analyze ✓`, `test ✓`).
 
 ---
 
 ## Этап C0 — Фундамент общего пакета
 
-**ТЗ:** [uCraft_Design_System.md](specs/uCraft_Design_System.md)
-
-- [ ] **C0-05** Общие форматтеры (`MoneyFormatter`, `WeightFormatter`, `DateFormatter` UTC → локальная TZ) и unit-тесты
-  - Проверка: `dart format --output=none --set-exit-if-changed . && flutter analyze && flutter test`
+Все задачи этапа `C0` (`C0-01`–`C0-05`) выполнены.
