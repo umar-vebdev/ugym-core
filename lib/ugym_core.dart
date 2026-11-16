@@ -1,6 +1,16 @@
 /// Shared core package for uGym and uGym Business.
 library;
 
+export 'package:dio/dio.dart'
+    show
+        Dio,
+        DioException,
+        Headers,
+        HttpClientAdapter,
+        Options,
+        RequestOptions,
+        ResponseBody;
+
 export 'design_system/components/buttons/ucraft_button.dart';
 export 'design_system/components/cards/ucraft_card.dart';
 export 'design_system/components/feedback/ucraft_async_states.dart';
