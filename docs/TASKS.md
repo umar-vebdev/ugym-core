@@ -14,6 +14,7 @@
 ## Готово
 
 - [x] **C0-01** Инициализирован Flutter-пакет `ugym_core` (`pubspec.yaml`, `publish_to: none`), настроены строгие правила `analysis_options.yaml` (strict-casts/inference/raw-types + линты), очищена точка входа `lib/ugym_core.dart` и проверен smoke-тест (`format ✓`, `analyze ✓`, `test ✓`).
+- [x] **C0-02** (заметка: в Flutter 3.50 `package:flutter/material.dart` помечен как transitional deprecated в пользу внешнего `material_ui`, поэтому добавлен точечный `// ignore: deprecated_member_use` на импорт без добавления новой зависимости) Реализованы токены uCraft Design System 1.0 (`UcraftBrandColors`, `UcraftColors` Light/Dark `ThemeExtension`, `UcraftTypography` Inter + GeistMono, `UcraftSpacing` 4px, `UcraftRadius`, `UcraftElevation`, `UcraftMotion`) и `UcraftTheme.light()` / `UcraftTheme.dark()` + `context.ucraftColors`; 8 тестов зелёные (`format ✓`, `analyze ✓`, `test ✓`).
 
 ---
 
@@ -21,8 +22,6 @@
 
 **ТЗ:** [uCraft_Design_System.md](specs/uCraft_Design_System.md)
 
-- [ ] **C0-02** Токены дизайн-системы uCraft (`colors`, `typography` Inter + Geist Mono, `spacing` 4px, `radius`, `elevation`, `motion`) и темы `Light` / `Dark` (`ThemeExtension`)
-  - Проверка: `flutter test` (токены и контраст Light/Dark)
 - [ ] **C0-03** Базовые UI-компоненты uCraft (`Primary`/`Secondary`/`Tertiary`/`Destructive` кнопки, `TextField` с состояниями, `Standard`/`Interactive`/`Highlight` карточки, `Loading`/`Empty`/`Error` состояния)
   - Проверка: widget-тесты в Light и Dark темах
 - [ ] **C0-04** Сетевое ядро (`Dio` + интерцепторы `Auth`, `Accept-Language`, `X-Request-Id`, `Idempotency-Key`, `ErrorMapper`) и `SecureStorage`
