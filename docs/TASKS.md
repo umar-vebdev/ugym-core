@@ -13,7 +13,7 @@
 
 ## Готово
 
-*(пока нет завершённых задач)*
+- [x] **C0-01** Инициализирован Flutter-пакет `ugym_core` (`pubspec.yaml`, `publish_to: none`), настроены строгие правила `analysis_options.yaml` (strict-casts/inference/raw-types + линты), очищена точка входа `lib/ugym_core.dart` и проверен smoke-тест (`format ✓`, `analyze ✓`, `test ✓`).
 
 ---
 
@@ -21,8 +21,6 @@
 
 **ТЗ:** [uCraft_Design_System.md](specs/uCraft_Design_System.md)
 
-- [ ] **C0-01** Инициализация Flutter-пакета `ugym_core` (`flutter create --template=package ugym_core`), настройка `pubspec.yaml` и строгих правил `analysis_options.yaml`
-  - Проверка: `flutter analyze && flutter test`
 - [ ] **C0-02** Токены дизайн-системы uCraft (`colors`, `typography` Inter + Geist Mono, `spacing` 4px, `radius`, `elevation`, `motion`) и темы `Light` / `Dark` (`ThemeExtension`)
   - Проверка: `flutter test` (токены и контраст Light/Dark)
 - [ ] **C0-03** Базовые UI-компоненты uCraft (`Primary`/`Secondary`/`Tertiary`/`Destructive` кнопки, `TextField` с состояниями, `Standard`/`Interactive`/`Highlight` карточки, `Loading`/`Empty`/`Error` состояния)
