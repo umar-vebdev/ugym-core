@@ -1,7 +1,5 @@
-// Flutter 3.50 transitional deprecation; keep SDK material import without extra deps.
-// ignore: deprecated_member_use
-import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:ugym_core/ugym_core.dart';
 
 void main() {

@@ -23,3 +23,12 @@
 - Причина: стандартный и надёжный стек из мобильных ТЗ без лишних зависимостей (принципы KISS/YAGNI).
 - Затронутые разделы ТЗ: `uGym_Mobile_TZ.md` (разделы 2.3, 2.4), `uGym_Business_Mobile_TZ.md` (раздел 2.3), `C0-04`
 - Статус: принято
+
+
+### D-003 — Миграция дизайн-системы ugym_core на material_ui 1.1.0 для совместимости с Flutter 3.50
+- Дата: 2026-11-16
+- Тип: решение
+- Решение: в `ugym_core/pubspec.yaml` добавляется `material_ui: ^1.1.0`, а все импорты `package:flutter/material.dart` (включая `// ignore: deprecated_member_use`) заменяются на `package:material_ui/material_ui.dart`.
+- Причина: в Flutter 3.50 `flutter create` для приложений автоматически подключает `material_ui: ^1.1.0`, чьи `ThemeData` / `ThemeExtension` являются отдельными типами от устаревшего `package:flutter/material.dart`. Единый пакет `material_ui` обеспечивает полную совместимость `ugym_core` с `uGym` и `uGym Business` и убирает все `// ignore`.
+- Затронутые разделы ТЗ: `uCraft_Design_System.md` (раздел 21), `C0-02`, `C0-03a`, `C0-03b`
+- Статус: принято

@@ -1,6 +1,4 @@
-// Flutter 3.50 transitional deprecation; keep SDK material import without extra deps.
-// ignore: deprecated_member_use
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 import '../../themes/ucraft_theme.dart';
 import '../../tokens/ucraft_elevation.dart';

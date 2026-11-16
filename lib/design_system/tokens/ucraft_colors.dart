@@ -1,6 +1,4 @@
-// Flutter 3.50 transitional deprecation; keep SDK material import without extra deps.
-// ignore: deprecated_member_use
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 /// Canonical brand colors of uCraft Design System 1.0 (Midnight & Cobalt).
 ///
