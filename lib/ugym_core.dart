@@ -5,8 +5,10 @@ export 'package:dio/dio.dart'
     show
         Dio,
         DioException,
+        FormData,
         Headers,
         HttpClientAdapter,
+        MultipartFile,
         Options,
         RequestOptions,
         ResponseBody;
