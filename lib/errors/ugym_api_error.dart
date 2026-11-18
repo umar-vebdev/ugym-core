@@ -8,6 +8,7 @@ final class UgymApiException implements Exception {
     this.statusCode,
     this.fieldErrors = const <String, List<String>>{},
     this.isNetworkError = false,
+    this.retryAfterSeconds,
   });
 
   final int? statusCode;
@@ -15,6 +16,7 @@ final class UgymApiException implements Exception {
   final String message;
   final Map<String, List<String>> fieldErrors;
   final bool isNetworkError;
+  final int? retryAfterSeconds;
 
   bool get isUnauthorized =>
       statusCode == 401 || code == 'UNAUTHENTICATED' || code == 'UNAUTHORIZED';
@@ -24,6 +26,8 @@ final class UgymApiException implements Exception {
   bool get isSubscriptionExpired => code == 'SUBSCRIPTION_EXPIRED';
 
   bool get isGeoLocationRequired => code == 'GEO_LOCATION_REQUIRED';
+
+  bool get isRateLimited => statusCode == 429 || code == 'TOO_MANY_REQUESTS';
 
   bool get isValidationFailed =>
       statusCode == 422 ||
@@ -76,10 +80,15 @@ abstract final class UgymErrorMapper {
             isNetworkError: true,
           );
         }
+        final rawRetryAfter = response?.headers.value('retry-after');
+        final int? retryAfterSeconds = rawRetryAfter != null
+            ? int.tryParse(rawRetryAfter.trim())
+            : null;
         return fromResponse(
           statusCode: response?.statusCode,
           data: response?.data,
           fallbackMessage: exception.message ?? 'Request failed.',
+          retryAfterSeconds: retryAfterSeconds,
         );
     }
   }
@@ -88,6 +97,7 @@ abstract final class UgymErrorMapper {
     int? statusCode,
     Object? data,
     String fallbackMessage = 'Request failed.',
+    int? retryAfterSeconds,
   }) {
     String code = _defaultCodeForStatus(statusCode);
     String message = fallbackMessage;
@@ -122,11 +132,18 @@ abstract final class UgymErrorMapper {
       }
     }
 
+    if (retryAfterSeconds != null &&
+        retryAfterSeconds > 0 &&
+        !message.contains('$retryAfterSeconds')) {
+      message = '$message (Повторите через $retryAfterSeconds сек.)';
+    }
+
     return UgymApiException(
       statusCode: statusCode,
       code: code,
       message: message,
       fieldErrors: fieldErrors,
+      retryAfterSeconds: retryAfterSeconds,
     );
   }
 
