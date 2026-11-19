@@ -1,7 +1,7 @@
-# uCraft Design System 1.0
+# uCraft Design System 1.1
 ## Midnight & Cobalt — uGym Ecosystem
 
-**Status:** Approved design specification  
+**Status:** Approved design specification (v1.0 + v1.1 UX and Layout Addendum, Sections 25–33)  
 **Products:** uGym, uGym Business  
 **Design language:** Modern, minimal, precise, calm, premium  
 **Primary platforms:** Android and iOS  
@@ -747,7 +747,7 @@ A screen is complete only when:
 
 **Studio:** uCraft  
 **Products:** uGym, uGym Business  
-**Design system:** uCraft Design System 1.0  
+**Design system:** uCraft Design System 1.1  
 **Visual language:** Midnight & Cobalt  
 **Primary font:** Inter  
 **Technical font:** Geist Mono  
@@ -758,3 +758,206 @@ A screen is complete only when:
 **Component philosophy:** Minimal, functional, consistent, accessible
 
 **Final instruction:** Build every screen as part of one coherent product ecosystem. Do not independently redesign components or reinterpret the established visual identity.
+
+---
+
+# uCraft Design System 1.1 — UX and Layout Addendum
+
+**Status:** Approved addendum to uCraft Design System 1.0
+**Applies to:** uGym, uGym Business
+**Scope:** layout, hierarchy, component composition, screen patterns, interaction
+**Precedence:** Section 1–24 of v1.0 remain fully in force. This addendum only adds
+composition rules. It does NOT change any token (colors, typography, spacing, radius,
+elevation, motion, icons, fonts). If this addendum and v1.0 conflict on a token value,
+v1.0 wins.
+
+Terminology used below:
+- **Visual hierarchy**: the order in which the eye reads a screen, created by size,
+  weight, position and contrast. Not by decoration.
+- **Hero element**: the single most important block on a screen.
+- **Skeleton**: a gray placeholder shaped like the content while data loads.
+
+---
+
+# 25. Why this addendum exists
+
+v1.0 defines correct tokens, but screens built from it tend to look flat because every
+element gets equal weight: identical bordered cards, accent color spread everywhere,
+no clear first read. This addendum fixes hierarchy and rhythm without adding any new
+visual language.
+
+---
+
+# 26. Screen Composition Rules
+
+1. **One hero element per screen.** Exactly one block is visually dominant
+   (for uGym Home: the active membership card). Everything else is secondary.
+2. **One primary action per screen.** Exactly one Primary Button is visible at a time.
+   All other actions use Secondary or Tertiary buttons.
+3. **Hierarchy through size and weight first, color second.** Use the typography scale
+   (Headline, Title, Body, Caption) to rank content. Reserve `primary` color for
+   actions, links and the active navigation item only.
+4. **Cards only for important or grouped objects.** Do not wrap every item in a card.
+   Repeated items (schedules, visits, members, payments) are rendered as list rows with
+   1dp `border` dividers, not as stacked bordered cards.
+5. **Consistent vertical rhythm.** Between sections use space6 (24). Inside a section
+   use space3 (12). Between a section title and its content use space1–space2 (4–8).
+   Screen horizontal padding is space5 (20).
+6. **Content order on every screen:** greeting or title → hero element → primary action
+   → secondary sections → navigation. Do not reorder per screen.
+7. **Maximum three levels of visual weight** per screen: hero, section content,
+   supporting metadata.
+8. **Whitespace is a feature.** Do not fill empty space with extra cards, banners or
+   decorative blocks.
+
+---
+
+# 27. Component Composition Rules
+
+## 27.1 Highlight (hero) card
+- Background `primarySubtle`, radius radiusLg (16), padding space5 (20), elevation 0.
+- Contains in order: overline label, title (Title Large), subtitle (Body, `foregroundSecondary`),
+  progress or key metric, one line of supporting meta (Caption).
+- Status shown as a pill (see 27.3), top-right of the card.
+- No gradients, no illustrations by default.
+
+## 27.2 List rows
+- Row padding: space3 (12) vertical, 0 horizontal inside the screen padding.
+- Divider: 1dp `border` between rows, none after the last row.
+- Row structure: leading element (time, icon or avatar) → primary text (Body Medium) with
+  secondary text below (Caption, `foregroundMuted`) → trailing meta (Caption) or chevron.
+- Entire row is tappable with a visible pressed state and minimum height 48dp.
+- Leading time or numeric columns use Geist Mono with tabular numbers and a fixed
+  width of space12 (48) so columns align.
+
+## 27.3 Status pill
+- Radius radiusFull, horizontal padding space2–space3, text Label or Caption weight 500–600.
+- Colors come only from status tokens (successBackground + successForeground, etc.).
+- Always icon + text. Never color alone. Icons: Lucide, 16dp.
+
+## 27.4 Progress indicator
+- Track: `borderStrong`. Fill: `primary`. Height space2 (8), radius radiusFull.
+- Always accompanied by a text label with the real value (for example remaining days).
+- Never display a progress value that is not calculated from real data.
+
+## 27.5 Buttons in context
+- The primary action is full width on compact screens and sits directly below the hero element.
+- Secondary and tertiary actions are placed below or inside sections, never competing
+  with the primary button in the same row unless it is a two-button dialog footer.
+- Button label: verb first, 1–3 words, sentence case, no trailing punctuation
+  (examples: "Show QR code", "Renew membership", "Mark visit").
+
+## 27.6 Section header
+- Title (Title) on the left, optional Tertiary action ("See all") on the right,
+  baseline-aligned. Section spacing space6 (24) above.
+
+## 27.7 Bottom navigation (uGym)
+- 5 destinations, each icon 24dp + label Overline-size or Caption weight 500.
+- Active item: `primary` icon and label. Inactive: `foregroundMuted`.
+- Background `surface`, 1dp `border` top divider, respects safe area.
+- Height: space16 (64) plus system inset.
+
+---
+
+# 28. Numeric and Data Display
+
+- Times, counts, codes, prices and identifiers use Geist Mono with tabular figures.
+- Format using locale rules (dates, numbers, currency) from section 20.
+- Large single metrics: Headline or Title Large, with a Caption label above or below.
+- Never show placeholder or invented numbers. If data is missing, show the empty state.
+
+---
+
+# 29. Screen Specifications
+
+## 29.1 uGym — Home (member app)
+Order from top to bottom:
+1. Header row: greeting (Caption, `foregroundMuted`) above user name (Headline),
+   avatar (space10 = 40dp, radiusFull, `primarySubtle` background) on the right.
+2. Hero: active membership card (27.1) showing plan name, club name, status pill,
+   progress bar, remaining days label, end date.
+3. Primary action: full-width Primary Button "Show QR code" with Lucide `qr-code` icon.
+4. Section "Today at your club": list rows (27.2) with time (mono), class name,
+   room and trainer, remaining spots. Tertiary action "All".
+5. Bottom navigation.
+
+Edge cases:
+- No active membership: hero becomes an empty state with a primary action
+  "Choose a plan". The QR button is hidden, not disabled.
+- Expired membership: status pill uses warning or destructive tokens with text;
+  primary action becomes "Renew membership".
+- Multiple memberships: hero shows the most relevant one; a Tertiary action
+  "All memberships" leads to the Memberships tab.
+
+## 29.2 uGym Business — Overview
+Order from top to bottom (compact):
+1. Header: club name and role-aware context switcher (if the user has several clubs).
+2. KPI strip: 2–3 metrics maximum, real data only
+   (for example visits today, active memberships, revenue today). Each metric is a
+   Caption label plus Headline value; no charts inside the strip.
+3. Primary action: "Mark visit" (or the most frequent staff action, based on role),
+   reachable from every Overview state.
+4. Search field and filter control on one row.
+5. Recent visits or members as list rows (27.2) with explicit status pills.
+6. Role-aware navigation (section 13).
+
+Tables on medium and expanded screens:
+- Sticky header row, sortable columns where the backend supports it.
+- Row actions in an overflow menu (Lucide `more-horizontal`), not as multiple inline buttons.
+- Destructive or sensitive actions always require confirmation (section 10).
+- Do not show actions the user lacks permission for.
+
+---
+
+# 30. Interaction and Feedback
+
+- Every tappable element shows a pressed state within 100ms.
+- Prefer skeletons over full-screen spinners for content-heavy lists and cards.
+- Pull-to-refresh on list and dashboard screens where data can change.
+- After an action succeeds, confirm with a short snackbar or inline state change.
+  Never confirm before the backend confirms.
+- Errors: plain-language message, a retry action, no technical details.
+- Keep transitions within the durations in section 17. No decorative animation.
+- Use platform haptics only for meaningful confirmations (for example successful check-in).
+
+---
+
+# 31. Copy Rules for UI Text
+
+- Sentence case for buttons, headings, tabs and labels.
+- No terminal punctuation on labels and headings. Helper text ends with a period.
+- Verb-first buttons, no "OK" or "Submit" when a specific verb fits.
+- Empty states are an invitation: headline names the space, one line explains, one verb button.
+- Error format: what happened, then what to do. No "Error:" prefix.
+- All strings go through localization keys (ru, en, tg). Allow 30–40% longer text.
+
+---
+
+# 32. Additional Rules for AI Agents
+
+These extend section 22.
+
+1. Before building a screen, identify its single hero element and single primary action.
+2. Render repeated items as list rows, not stacked bordered cards.
+3. Use only existing tokens. If a value is needed that has no token (for example a
+   progress bar height), map it to the nearest existing spacing token.
+4. Do not introduce new components when a composition of existing ones works.
+5. Always provide loading (skeleton), empty, error and permission-denied states.
+6. Use real data and real permissions. Never invent endpoints, fields or metrics.
+7. Verify every screen in light and dark themes and with large system text sizes.
+8. Do not add gradients, shadows beyond section 8, emoji icons, or decorative motion.
+9. When a design decision is unspecified, follow the closest pattern in this addendum
+   or in v1.0, and state the assumption in the pull request description.
+
+---
+
+# 33. Definition of Done (additions)
+
+A screen is complete only if, in addition to section 23:
+
+- It has exactly one hero element and exactly one visible primary action.
+- Repeated content is rendered as list rows with dividers.
+- Vertical rhythm follows section 26 (24 between sections, 12 within).
+- Statuses are shown with icon and text, never color alone.
+- Numeric values use Geist Mono with tabular figures and locale formatting.
+- Every empty, loading and error state has been implemented and visually checked.
