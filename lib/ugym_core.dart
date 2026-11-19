@@ -17,6 +17,7 @@ export 'design_system/components/buttons/ucraft_button.dart';
 export 'design_system/components/cards/ucraft_card.dart';
 export 'design_system/components/feedback/ucraft_async_states.dart';
 export 'design_system/components/inputs/ucraft_text_field.dart';
+export 'design_system/components/layout/ucraft_v11_components.dart';
 export 'design_system/themes/ucraft_theme.dart';
 export 'design_system/tokens/ucraft_colors.dart';
 export 'design_system/tokens/ucraft_elevation.dart';

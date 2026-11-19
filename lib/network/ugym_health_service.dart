@@ -47,4 +47,3 @@ final class UgymHealthService {
     return UgymHealthStatus.fromJson(response.data);
   }
 }
-

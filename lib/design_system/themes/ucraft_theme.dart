@@ -68,6 +68,44 @@ abstract final class UcraftTheme {
         scrolledUnderElevation: 0,
         centerTitle: false,
       ),
+      navigationBarTheme: NavigationBarThemeData(
+        backgroundColor: colors.surface,
+        elevation: 0,
+        height: 64,
+        indicatorColor: Colors.transparent,
+        iconTheme: WidgetStateProperty.resolveWith((states) {
+          final selected = states.contains(WidgetState.selected);
+          return IconThemeData(
+            size: 24,
+            color: selected ? colors.primary : colors.foregroundMuted,
+          );
+        }),
+        labelTextStyle: WidgetStateProperty.resolveWith((states) {
+          final selected = states.contains(WidgetState.selected);
+          return UcraftTypography.caption.copyWith(
+            fontWeight: FontWeight.w500,
+            color: selected ? colors.primary : colors.foregroundMuted,
+          );
+        }),
+      ),
+      navigationRailTheme: NavigationRailThemeData(
+        backgroundColor: colors.surface,
+        elevation: 0,
+        indicatorColor: colors.primarySubtle,
+        selectedIconTheme: IconThemeData(size: 24, color: colors.primary),
+        unselectedIconTheme: IconThemeData(
+          size: 24,
+          color: colors.foregroundMuted,
+        ),
+        selectedLabelTextStyle: UcraftTypography.caption.copyWith(
+          fontWeight: FontWeight.w600,
+          color: colors.primary,
+        ),
+        unselectedLabelTextStyle: UcraftTypography.caption.copyWith(
+          fontWeight: FontWeight.w500,
+          color: colors.foregroundMuted,
+        ),
+      ),
       extensions: [colors],
     );
   }

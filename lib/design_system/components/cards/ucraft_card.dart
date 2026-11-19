@@ -44,10 +44,12 @@ final class UcraftCard extends StatelessWidget {
 
     final shape = RoundedRectangleBorder(
       borderRadius: borderRadius,
-      side: BorderSide(
-        color: colors.border,
-        width: UcraftElevation.borderDefault,
-      ),
+      side: isHighlight
+          ? BorderSide.none
+          : BorderSide(
+              color: colors.border,
+              width: UcraftElevation.borderDefault,
+            ),
     );
 
     final Widget paddedChild = Padding(padding: resolvedPadding, child: child);
