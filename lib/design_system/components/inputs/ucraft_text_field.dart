@@ -51,12 +51,13 @@ final class UcraftTextField extends StatelessWidget {
   Widget build(BuildContext context) {
     final colors = context.ucraftColors;
     final bool hasError = errorText != null && errorText!.trim().isNotEmpty;
+    final themedBorder = InputDecorationTheme.of(context).enabledBorder;
 
     final Color defaultBorderColor = hasError
         ? colors.destructive
         : isSuccess
         ? colors.success
-        : colors.border;
+        : themedBorder?.borderSide.color ?? colors.border;
     final double defaultBorderWidth = (hasError || isSuccess)
         ? UcraftElevation.borderStrong
         : UcraftElevation.borderDefault;

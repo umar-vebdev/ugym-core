@@ -93,6 +93,30 @@ void main() {
       expect(successBorder?.borderSide.color, UcraftColors.dark.success);
       expect(successBorder?.borderSide.width, UcraftElevation.borderStrong);
     });
+
+    testWidgets('uses the theme border color for an ordinary text field', (
+      tester,
+    ) async {
+      final base = UcraftTheme.light();
+      final strong = UcraftColors.light.borderStrong;
+      await tester.pumpWidget(
+        wrapTheme(
+          theme: base.copyWith(
+            inputDecorationTheme: InputDecorationThemeData(
+              enabledBorder: OutlineInputBorder(
+                borderSide: BorderSide(color: strong),
+              ),
+            ),
+          ),
+          child: const UcraftTextField(label: 'Email'),
+        ),
+      );
+
+      final field = tester.widget<TextField>(find.byType(TextField));
+      final border = field.decoration?.enabledBorder as OutlineInputBorder?;
+      expect(border?.borderSide.color, strong);
+      expect(border?.borderRadius, UcraftRadius.borderSm);
+    });
   });
 
   group('Ucraft async states', () {

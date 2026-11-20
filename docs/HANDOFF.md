@@ -1,8 +1,8 @@
 # Handoff — ugym_core (Shared Package)
 
-**Обновлено:** 2026-11-16
-**Текущий этап:** C0 — Фундамент общего пакета (завершён)
-**Текущая задача:** Все задачи этапа `C0` завершены (`C0-01`–`C0-05` `[x]`)
+**Обновлено** 2026-11-20
+**Текущий этап** C0 — общие компоненты uCraft
+**Текущая задача** `C0-06` — настройка контраста границы полей через тему завершена
 
 ## Что сделано в последней сессии
 
@@ -11,7 +11,8 @@
   - **Сетевое ядро и хранилище**: `UgymHttpClient`, `UgymHealthService` (`GET /api/v1/health`), `UgymNetworkInterceptor` (`Auth`, `Accept-Language`, `X-Request-Id`, `Idempotency-Key`, колбэки `401`/`SUBSCRIPTION_EXPIRED`), `UgymApiException` + `UgymErrorMapper`, `TokenStorage` (`SecureTokenStorage`, `InMemoryTokenStorage`).
   - **Форматтеры**: `MoneyFormatter` (`minorUnits` → `TJS`), `WeightFormatter` (`grams` ↔ `кг`, 1RM Эпли), `DateFormatter` (`UTC` → `Asia/Dushanbe`, минутные окна `HH:MM`).
 - Все проверки пройдены: `dart format` ✓, `flutter analyze` ✓ (`No issues found!`), `flutter test` ✓ (`34 passed`).
+- **C0-06**. Цвет границы обычного поля берётся из `InputDecorationTheme.enabledBorder` при наличии настройки. Базовые темы сохраняют прежние цвета. Форматирование, анализ и все 36 тестов прошли.
 
 ## Точный следующий шаг
 
-- Подключить `ugym_core` и начать этап `M0` в `/home/umar/ugym-mobile/uGym` или `B0` в `/home/umar/ugym-mobile/uGym Business` (после установки Android SDK для сборки под Android или сразу на уровне Dart/Flutter-кода и тестов).
+- Подтвердить цвет границы и работу формы входа в uGym Business в задаче `B10-03`.
