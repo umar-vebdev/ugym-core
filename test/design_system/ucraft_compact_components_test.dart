@@ -3,6 +3,34 @@ import 'package:material_ui/material_ui.dart';
 import 'package:ugym_core/ugym_core.dart';
 
 void main() {
+  testWidgets('compact tabs share a surface and keep all options interactive', (
+    tester,
+  ) async {
+    var selected = 'Visits';
+    await tester.pumpWidget(
+      MaterialApp(
+        theme: UcraftTheme.light().copyWith(
+          visualDensity: VisualDensity.compact,
+        ),
+        home: Scaffold(
+          body: UcraftSegmentedTabs<String>(
+            items: const [
+              UcraftSegmentedTabItem(value: 'Visits', label: 'Visits'),
+              UcraftSegmentedTabItem(value: 'Sales', label: 'Sales'),
+            ],
+            selected: selected,
+            onSelected: (value) => selected = value,
+          ),
+        ),
+      ),
+    );
+    final options = find.byType(TextButton);
+    expect(options, findsNWidgets(2));
+    expect(tester.getSize(options.first).height, 48);
+    await tester.tap(find.text('Sales'));
+    expect(selected, 'Sales');
+  });
+
   testWidgets('compact button keeps the 48dp tap target and smaller fill', (
     tester,
   ) async {

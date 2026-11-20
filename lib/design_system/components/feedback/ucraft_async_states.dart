@@ -97,26 +97,42 @@ final class UcraftEmptyState extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final colors = context.ucraftColors;
+    final compact = context.ucraftCompact;
 
     return Center(
       child: Padding(
-        padding: const EdgeInsets.all(UcraftSpacing.space6),
+        padding: EdgeInsets.all(
+          compact ? UcraftSpacing.space3 : UcraftSpacing.space6,
+        ),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
             Container(
-              width: 48,
-              height: 48,
+              width: compact ? UcraftSpacing.space8 : UcraftSpacing.space12,
+              height: compact ? UcraftSpacing.space8 : UcraftSpacing.space12,
               decoration: BoxDecoration(
                 color: colors.surfaceSecondary,
                 borderRadius: UcraftRadius.borderMd,
               ),
-              child: Icon(icon, size: 24, color: colors.foregroundSecondary),
+              child: Icon(
+                icon,
+                size: compact ? 18 : 24,
+                color: colors.foregroundSecondary,
+              ),
             ),
-            const SizedBox(height: UcraftSpacing.space4),
+            SizedBox(
+              height: compact ? UcraftSpacing.space2 : UcraftSpacing.space4,
+            ),
             Text(
               title,
-              style: UcraftTypography.title.copyWith(color: colors.foreground),
+              style:
+                  (compact
+                          ? UcraftTypography.bodyLarge
+                          : UcraftTypography.title)
+                      .copyWith(
+                        fontWeight: FontWeight.w600,
+                        color: colors.foreground,
+                      ),
               textAlign: TextAlign.center,
             ),
             if (description != null && description!.trim().isNotEmpty) ...[
@@ -130,7 +146,9 @@ final class UcraftEmptyState extends StatelessWidget {
               ),
             ],
             if (actionLabel != null && onAction != null) ...[
-              const SizedBox(height: UcraftSpacing.space6),
+              SizedBox(
+                height: compact ? UcraftSpacing.space2 : UcraftSpacing.space6,
+              ),
               UcraftButton(label: actionLabel!, onPressed: onAction),
             ],
           ],
@@ -160,29 +178,43 @@ final class UcraftErrorState extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final colors = context.ucraftColors;
+    final compact = context.ucraftCompact;
 
     return Center(
       child: Padding(
-        padding: const EdgeInsets.all(UcraftSpacing.space6),
+        padding: EdgeInsets.all(
+          compact ? UcraftSpacing.space3 : UcraftSpacing.space6,
+        ),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
             Container(
-              width: 48,
-              height: 48,
+              width: compact ? UcraftSpacing.space8 : UcraftSpacing.space12,
+              height: compact ? UcraftSpacing.space8 : UcraftSpacing.space12,
               decoration: BoxDecoration(
                 color: colors.destructiveBackground,
                 borderRadius: UcraftRadius.borderMd,
               ),
-              child: Icon(icon, size: 24, color: colors.destructive),
+              child: Icon(
+                icon,
+                size: compact ? 18 : 24,
+                color: colors.destructive,
+              ),
             ),
-            const SizedBox(height: UcraftSpacing.space4),
+            SizedBox(
+              height: compact ? UcraftSpacing.space2 : UcraftSpacing.space4,
+            ),
             if (title != null && title!.trim().isNotEmpty) ...[
               Text(
                 title!,
-                style: UcraftTypography.title.copyWith(
-                  color: colors.foreground,
-                ),
+                style:
+                    (compact
+                            ? UcraftTypography.bodyLarge
+                            : UcraftTypography.title)
+                        .copyWith(
+                          fontWeight: FontWeight.w600,
+                          color: colors.foreground,
+                        ),
                 textAlign: TextAlign.center,
               ),
               const SizedBox(height: UcraftSpacing.space2),
@@ -195,7 +227,9 @@ final class UcraftErrorState extends StatelessWidget {
               textAlign: TextAlign.center,
             ),
             if (retryLabel != null && onRetry != null) ...[
-              const SizedBox(height: UcraftSpacing.space6),
+              SizedBox(
+                height: compact ? UcraftSpacing.space2 : UcraftSpacing.space6,
+              ),
               UcraftButton(
                 label: retryLabel!,
                 variant: UcraftButtonVariant.secondary,

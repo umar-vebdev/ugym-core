@@ -26,6 +26,7 @@ final class UcraftStatusPill extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final colors = context.ucraftColors;
+    final compact = context.ucraftCompact;
     final (bg, fg) = switch (tone) {
       UcraftStatusTone.success => (
         colors.successBackground,
@@ -58,7 +59,7 @@ final class UcraftStatusPill extends StatelessWidget {
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Icon(icon, size: 16, color: fg),
+          Icon(icon, size: compact ? 12 : 16, color: fg),
           const SizedBox(width: UcraftSpacing.space1),
           Flexible(
             child: Text(
@@ -66,7 +67,8 @@ final class UcraftStatusPill extends StatelessWidget {
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
               style: UcraftTypography.caption.copyWith(
-                fontWeight: FontWeight.w600,
+                fontSize: compact ? UcraftTypography.overline.fontSize : null,
+                fontWeight: compact ? FontWeight.w500 : FontWeight.w600,
                 color: fg,
               ),
             ),
@@ -175,7 +177,14 @@ final class UcraftSectionHeader extends StatelessWidget {
         Expanded(
           child: Text(
             title,
-            style: UcraftTypography.title.copyWith(color: colors.foreground),
+            style:
+                (context.ucraftCompact
+                        ? UcraftTypography.bodyLarge
+                        : UcraftTypography.title)
+                    .copyWith(
+                      color: colors.foreground,
+                      fontWeight: FontWeight.w600,
+                    ),
           ),
         ),
         if (actionLabel != null && onAction != null)
@@ -213,6 +222,7 @@ final class UcraftListRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final colors = context.ucraftColors;
+    final compact = context.ucraftCompact;
 
     final Widget? leadingWidget = leading == null
         ? null
@@ -229,7 +239,9 @@ final class UcraftListRow extends StatelessWidget {
     final Widget rowContent = ConstrainedBox(
       constraints: const BoxConstraints(minHeight: 48),
       child: Padding(
-        padding: const EdgeInsets.symmetric(vertical: UcraftSpacing.space3),
+        padding: EdgeInsets.symmetric(
+          vertical: compact ? UcraftSpacing.space2 : UcraftSpacing.space3,
+        ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           mainAxisSize: MainAxisSize.min,
@@ -308,7 +320,7 @@ final class UcraftListSection extends StatelessWidget {
       return const SizedBox.shrink();
     }
     final colors = context.ucraftColors;
-    return Column(
+    final rows = Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       mainAxisSize: MainAxisSize.min,
       children: [
@@ -322,6 +334,17 @@ final class UcraftListSection extends StatelessWidget {
             ),
         ],
       ],
+    );
+    if (!context.ucraftCompact) return rows;
+
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: UcraftSpacing.space3),
+      decoration: BoxDecoration(
+        color: colors.surface,
+        borderRadius: UcraftRadius.borderMd,
+        border: Border.all(color: colors.border),
+      ),
+      child: rows,
     );
   }
 }
@@ -351,9 +374,11 @@ final class UcraftSegmentedTabs<T> extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Wrap(
-      spacing: UcraftSpacing.space2,
-      runSpacing: UcraftSpacing.space2,
+    final compact = context.ucraftCompact;
+    final colors = context.ucraftColors;
+    final tabs = Wrap(
+      spacing: compact ? UcraftSpacing.space1 : UcraftSpacing.space2,
+      runSpacing: compact ? 0 : UcraftSpacing.space2,
       children: [
         for (final item in items)
           _SegmentedPill<T>(
@@ -362,6 +387,18 @@ final class UcraftSegmentedTabs<T> extends StatelessWidget {
             onTap: enabled ? () => onSelected(item.value) : null,
           ),
       ],
+    );
+    if (!compact) return tabs;
+
+    return Container(
+      width: double.infinity,
+      padding: const EdgeInsets.symmetric(horizontal: UcraftSpacing.space1),
+      decoration: BoxDecoration(
+        color: colors.surfaceSecondary,
+        borderRadius: UcraftRadius.borderMd,
+        border: Border.all(color: colors.border),
+      ),
+      child: tabs,
     );
   }
 }
@@ -380,6 +417,32 @@ final class _SegmentedPill<T> extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final c = context.ucraftColors;
+    if (context.ucraftCompact) {
+      return Semantics(
+        selected: isSelected,
+        child: TextButton(
+          onPressed: onTap,
+          style: TextButton.styleFrom(
+            visualDensity: VisualDensity.standard,
+            tapTargetSize: MaterialTapTargetSize.padded,
+            minimumSize: const Size(48, 32),
+            padding: const EdgeInsets.symmetric(
+              horizontal: UcraftSpacing.space2,
+            ),
+            backgroundColor: isSelected ? c.surface : Colors.transparent,
+            foregroundColor: isSelected ? c.primary : c.foregroundSecondary,
+            shape: const RoundedRectangleBorder(
+              borderRadius: UcraftRadius.borderSm,
+            ),
+            side: isSelected ? BorderSide(color: c.border) : null,
+            textStyle: UcraftTypography.caption.copyWith(
+              fontWeight: FontWeight.w500,
+            ),
+          ),
+          child: Text(item.label),
+        ),
+      );
+    }
     final Color bg = isSelected ? c.primarySubtle : c.surface;
     final Color fg = isSelected ? c.primary : c.foregroundSecondary;
     final Color borderColor = isSelected ? c.primarySubtle : c.border;
