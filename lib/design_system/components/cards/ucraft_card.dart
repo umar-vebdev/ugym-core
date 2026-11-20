@@ -28,6 +28,7 @@ final class UcraftCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final colors = context.ucraftColors;
+    final compact = context.ucraftCompact;
     final bool isHighlight = variant == UcraftCardVariant.highlight;
 
     final Color backgroundColor = isHighlight
@@ -39,12 +40,16 @@ final class UcraftCard extends StatelessWidget {
     final EdgeInsetsGeometry resolvedPadding =
         padding ??
         EdgeInsets.all(
-          isHighlight ? UcraftSpacing.space5 : UcraftSpacing.cardPadding,
+          compact
+              ? UcraftSpacing.space3
+              : isHighlight
+              ? UcraftSpacing.space5
+              : UcraftSpacing.cardPadding,
         );
 
     final shape = RoundedRectangleBorder(
       borderRadius: borderRadius,
-      side: isHighlight
+      side: isHighlight && !compact
           ? BorderSide.none
           : BorderSide(
               color: colors.border,

@@ -113,6 +113,9 @@ abstract final class UcraftTheme {
 
 /// Convenient semantic token lookup via `context.ucraftColors`.
 extension UcraftThemeContext on BuildContext {
+  bool get ucraftCompact =>
+      Theme.of(this).visualDensity == VisualDensity.compact;
+
   UcraftColors get ucraftColors {
     final extension = Theme.of(this).extension<UcraftColors>();
     if (extension != null) {

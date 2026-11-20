@@ -41,7 +41,10 @@ final class UcraftButton extends StatelessWidget {
     final disableAnimations =
         MediaQuery.maybeDisableAnimationsOf(context) ?? false;
 
-    final double visualHeight = variant == UcraftButtonVariant.tertiary
+    final compact = context.ucraftCompact;
+    final double visualHeight = compact
+        ? UcraftSpacing.space10 - UcraftSpacing.space1
+        : variant == UcraftButtonVariant.tertiary
         ? 44
         : 48;
     final Color foregroundColor = _resolveForeground(
@@ -55,10 +58,17 @@ final class UcraftButton extends StatelessWidget {
           ? Duration.zero
           : UcraftMotion.buttonFeedback,
       tapTargetSize: MaterialTapTargetSize.padded,
+      visualDensity: compact ? VisualDensity.standard : null,
       minimumSize: WidgetStatePropertyAll(Size(48, visualHeight)),
-      maximumSize: WidgetStatePropertyAll(Size(double.infinity, visualHeight)),
-      padding: const WidgetStatePropertyAll(
-        EdgeInsets.symmetric(horizontal: UcraftSpacing.buttonHorizontalPadding),
+      maximumSize: compact
+          ? null
+          : WidgetStatePropertyAll(Size(double.infinity, visualHeight)),
+      padding: WidgetStatePropertyAll(
+        EdgeInsets.symmetric(
+          horizontal: compact
+              ? UcraftSpacing.space3
+              : UcraftSpacing.buttonHorizontalPadding,
+        ),
       ),
       shape: const WidgetStatePropertyAll(
         RoundedRectangleBorder(borderRadius: UcraftRadius.borderSm),
@@ -71,6 +81,7 @@ final class UcraftButton extends StatelessWidget {
           colors: colors,
           states: states,
           isDisabled: isDisabled,
+          compact: compact,
         );
       }),
       foregroundColor: WidgetStatePropertyAll(foregroundColor),
@@ -79,10 +90,13 @@ final class UcraftButton extends StatelessWidget {
           colors: colors,
           states: states,
           isDisabled: isDisabled,
+          compact: compact,
         );
       }),
       textStyle: WidgetStatePropertyAll(
-        UcraftTypography.bodyMedium.copyWith(fontWeight: FontWeight.w600),
+        compact
+            ? UcraftTypography.label.copyWith(fontWeight: FontWeight.w500)
+            : UcraftTypography.bodyMedium.copyWith(fontWeight: FontWeight.w600),
       ),
     );
 
@@ -153,7 +167,12 @@ final class UcraftButton extends StatelessWidget {
       button: true,
       enabled: isInteractive,
       label: semanticLabel ?? label,
-      child: AbsorbPointer(absorbing: isLoading, child: touchTarget),
+      child: AbsorbPointer(
+        absorbing: isLoading,
+        child: compact
+            ? SizedBox(width: fullWidth ? double.infinity : null, child: button)
+            : touchTarget,
+      ),
     );
   }
 
@@ -180,6 +199,7 @@ final class UcraftButton extends StatelessWidget {
     required UcraftColors colors,
     required Set<WidgetState> states,
     required bool isDisabled,
+    required bool compact,
   }) {
     if (isDisabled) {
       return variant == UcraftButtonVariant.tertiary
@@ -198,7 +218,11 @@ final class UcraftButton extends StatelessWidget {
             ? colors.primaryHover
             : colors.primary,
       UcraftButtonVariant.secondary =>
-        isPressed || isHovered ? colors.surfaceSecondary : colors.surface,
+        isPressed || isHovered
+            ? (compact ? colors.primarySubtle : colors.surfaceSecondary)
+            : compact
+            ? colors.surfaceSecondary
+            : colors.surface,
       UcraftButtonVariant.tertiary =>
         isPressed || isHovered ? colors.surfaceSecondary : Colors.transparent,
       UcraftButtonVariant.destructive =>
@@ -214,6 +238,7 @@ final class UcraftButton extends StatelessWidget {
     required UcraftColors colors,
     required Set<WidgetState> states,
     required bool isDisabled,
+    required bool compact,
   }) {
     if (states.contains(WidgetState.focused) && !isDisabled) {
       return BorderSide(
@@ -225,7 +250,9 @@ final class UcraftButton extends StatelessWidget {
     if (variant == UcraftButtonVariant.secondary) {
       return BorderSide(
         color: isDisabled ? colors.border : colors.borderStrong,
-        width: UcraftElevation.borderStrong,
+        width: compact
+            ? UcraftElevation.borderDefault
+            : UcraftElevation.borderStrong,
       );
     }
 

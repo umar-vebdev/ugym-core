@@ -50,6 +50,13 @@ final class UcraftTextField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final colors = context.ucraftColors;
+    final compact = context.ucraftCompact;
+    final textStyle = compact
+        ? UcraftTypography.body
+        : UcraftTypography.bodyLarge;
+    final labelStyle = compact
+        ? UcraftTypography.label.copyWith(fontWeight: FontWeight.w500)
+        : UcraftTypography.label;
     final bool hasError = errorText != null && errorText!.trim().isNotEmpty;
     final themedBorder = InputDecorationTheme.of(context).enabledBorder;
 
@@ -94,11 +101,10 @@ final class UcraftTextField extends StatelessWidget {
       mainAxisSize: MainAxisSize.min,
       children: [
         if (label != null) ...[
-          Text(
-            label!,
-            style: UcraftTypography.label.copyWith(color: colors.foreground),
+          Text(label!, style: labelStyle.copyWith(color: colors.foreground)),
+          SizedBox(
+            height: compact ? UcraftSpacing.space1 : UcraftSpacing.space2,
           ),
-          const SizedBox(height: UcraftSpacing.space2),
         ],
         TextField(
           controller: controller,
@@ -111,22 +117,22 @@ final class UcraftTextField extends StatelessWidget {
           maxLines: obscureText ? 1 : maxLines,
           onChanged: onChanged,
           onSubmitted: onSubmitted,
-          style: UcraftTypography.bodyLarge.copyWith(
+          style: textStyle.copyWith(
             color: enabled ? colors.foreground : colors.disabledForeground,
           ),
           decoration: InputDecoration(
             isDense: true,
             filled: true,
             fillColor: enabled ? colors.surface : colors.disabledBackground,
-            constraints: const BoxConstraints(minHeight: 52),
-            contentPadding: const EdgeInsets.symmetric(
-              horizontal: 14,
-              vertical: 14,
+            constraints: BoxConstraints(
+              minHeight: compact ? UcraftSpacing.space12 : 52,
+            ),
+            contentPadding: EdgeInsets.symmetric(
+              horizontal: compact ? UcraftSpacing.space3 : 14,
+              vertical: compact ? UcraftSpacing.space2 : 14,
             ),
             hintText: hintText,
-            hintStyle: UcraftTypography.bodyLarge.copyWith(
-              color: colors.foregroundMuted,
-            ),
+            hintStyle: textStyle.copyWith(color: colors.foregroundMuted),
             prefixIcon: prefixIcon,
             suffixIcon: suffixIcon,
             border: enabledBorder,
