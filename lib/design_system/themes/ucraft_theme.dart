@@ -5,24 +5,30 @@ import '../tokens/ucraft_elevation.dart';
 import '../tokens/ucraft_radius.dart';
 import '../tokens/ucraft_typography.dart';
 
-/// Builds Material [ThemeData] configured with uCraft Design System 1.0 tokens.
+/// Builds Material 3 themes with uCraft's semantic colors and typography.
 abstract final class UcraftTheme {
   static ThemeData light() =>
-      _build(brightness: Brightness.light, colors: UcraftColors.light);
+      material3(brightness: Brightness.light, colors: UcraftColors.light);
 
   static ThemeData dark() =>
-      _build(brightness: Brightness.dark, colors: UcraftColors.dark);
+      material3(brightness: Brightness.dark, colors: UcraftColors.dark);
 
-  static ThemeData _build({
+  static ThemeData material3({
     required Brightness brightness,
     required UcraftColors colors,
+    VisualDensity visualDensity = VisualDensity.standard,
   }) {
-    final colorScheme = ColorScheme(
+    final colorScheme = ColorScheme.fromSeed(
+      seedColor: colors.primary,
       brightness: brightness,
       primary: colors.primary,
       onPrimary: colors.onPrimary,
-      secondary: colors.accent,
+      primaryContainer: colors.primarySubtle,
+      onPrimaryContainer: colors.foreground,
+      secondary: colors.primary,
       onSecondary: colors.onPrimary,
+      secondaryContainer: colors.primarySubtle,
+      onSecondaryContainer: colors.foreground,
       error: colors.destructive,
       onError: brightness == Brightness.light
           ? UcraftBrandColors.white
@@ -30,12 +36,20 @@ abstract final class UcraftTheme {
       surface: colors.surface,
       onSurface: colors.foreground,
       onSurfaceVariant: colors.foregroundSecondary,
+      surfaceContainerLowest: colors.surface,
+      surfaceContainerLow: colors.background,
+      surfaceContainer: colors.surfaceSecondary,
+      surfaceContainerHigh: colors.surfaceSecondary,
+      surfaceContainerHighest: colors.surfaceTertiary,
       outline: colors.borderStrong,
       outlineVariant: colors.border,
+      errorContainer: colors.destructiveBackground,
+      onErrorContainer: colors.destructiveForeground,
     );
 
     return ThemeData(
       useMaterial3: true,
+      visualDensity: visualDensity,
       brightness: brightness,
       colorScheme: colorScheme,
       scaffoldBackgroundColor: colors.background,
@@ -68,11 +82,26 @@ abstract final class UcraftTheme {
         scrolledUnderElevation: 0,
         centerTitle: false,
       ),
+      dialogTheme: DialogThemeData(
+        backgroundColor: colorScheme.surfaceContainerHigh,
+        shape: const RoundedRectangleBorder(
+          borderRadius: UcraftRadius.border2xl,
+        ),
+      ),
+      bottomSheetTheme: BottomSheetThemeData(
+        backgroundColor: colors.surface,
+        modalBackgroundColor: colors.surface,
+        shape: const RoundedRectangleBorder(
+          borderRadius: BorderRadius.vertical(
+            top: Radius.circular(UcraftRadius.xxl),
+          ),
+        ),
+      ),
       navigationBarTheme: NavigationBarThemeData(
         backgroundColor: colors.surface,
         elevation: 0,
         height: 64,
-        indicatorColor: Colors.transparent,
+        indicatorColor: colorScheme.secondaryContainer,
         iconTheme: WidgetStateProperty.resolveWith((states) {
           final selected = states.contains(WidgetState.selected);
           return IconThemeData(

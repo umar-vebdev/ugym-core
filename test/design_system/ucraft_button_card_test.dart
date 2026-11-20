@@ -81,7 +81,7 @@ void main() {
         ),
       );
 
-      final button = tester.widget<TextButton>(find.byType(TextButton));
+      final button = tester.widget<FilledButton>(find.byType(FilledButton));
       expect(button.onPressed, isNull);
     });
   });

@@ -237,7 +237,7 @@ final class UcraftListRow extends StatelessWidget {
               : leading!);
 
     final Widget rowContent = ConstrainedBox(
-      constraints: const BoxConstraints(minHeight: 48),
+      constraints: BoxConstraints(minHeight: compact ? 48 : 56),
       child: Padding(
         padding: EdgeInsets.symmetric(
           vertical: compact ? UcraftSpacing.space2 : UcraftSpacing.space3,
@@ -260,16 +260,22 @@ final class UcraftListRow extends StatelessWidget {
                     children: [
                       Text(
                         title,
-                        style: UcraftTypography.bodyMedium.copyWith(
-                          color: colors.foreground,
-                        ),
+                        style:
+                            (compact
+                                    ? UcraftTypography.bodyMedium
+                                    : UcraftTypography.bodyLarge)
+                                .copyWith(
+                                  fontWeight: FontWeight.w600,
+                                  color: colors.foreground,
+                                ),
                       ),
                       if (subtitle != null && subtitle!.isNotEmpty) ...[
                         const SizedBox(height: UcraftSpacing.space1),
                         Text(
                           subtitle!,
-                          style: UcraftTypography.caption.copyWith(
-                            color: colors.foregroundMuted,
+                          style: UcraftTypography.body.copyWith(
+                            fontSize: 13,
+                            color: colors.foregroundSecondary,
                           ),
                         ),
                       ],
@@ -335,10 +341,12 @@ final class UcraftListSection extends StatelessWidget {
         ],
       ],
     );
-    if (!context.ucraftCompact) return rows;
-
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: UcraftSpacing.space3),
+      padding: EdgeInsets.symmetric(
+        horizontal: context.ucraftCompact
+            ? UcraftSpacing.space3
+            : UcraftSpacing.space4,
+      ),
       decoration: BoxDecoration(
         color: colors.surface,
         borderRadius: UcraftRadius.borderMd,
@@ -443,9 +451,9 @@ final class _SegmentedPill<T> extends StatelessWidget {
         ),
       );
     }
-    final Color bg = isSelected ? c.primarySubtle : c.surface;
-    final Color fg = isSelected ? c.primary : c.foregroundSecondary;
-    final Color borderColor = isSelected ? c.primarySubtle : c.border;
+    final Color bg = isSelected ? c.primary : c.surface;
+    final Color fg = isSelected ? c.onPrimary : c.foregroundSecondary;
+    final Color borderColor = isSelected ? c.primary : c.border;
 
     return Semantics(
       button: true,
@@ -467,11 +475,11 @@ final class _SegmentedPill<T> extends StatelessWidget {
           highlightColor: c.surfaceSecondary,
           splashColor: c.surfaceSecondary,
           child: ConstrainedBox(
-            constraints: const BoxConstraints(minHeight: 40),
+            constraints: const BoxConstraints(minHeight: 42),
             child: Padding(
               padding: const EdgeInsets.symmetric(
-                horizontal: UcraftSpacing.space3,
-                vertical: UcraftSpacing.space2,
+                horizontal: UcraftSpacing.space4,
+                vertical: UcraftSpacing.space2 + 2,
               ),
               child: Text(
                 item.label,

@@ -126,6 +126,68 @@ final class UcraftColors extends ThemeExtension<UcraftColors> {
     infoForeground: Color(0xFFBFDBFE),
   );
 
+  /// The approved softened palette used for the Material 3 app themes.
+  static final UcraftColors softLight = light.copyWith(
+    background: const Color(0xFFF5F7FA),
+    surfaceSecondary: const Color(0xFFECF1F8),
+    surfaceTertiary: const Color(0xFFD7DFED),
+    foreground: const Color(0xFF151D2B),
+    foregroundSecondary: const Color(0xFF526078),
+    foregroundMuted: const Color(0xFF526078),
+    border: const Color(0xFFCCD6E4),
+    borderStrong: const Color(0xFF7989A4),
+    primary: const Color(0xFF315FCB),
+    primaryHover: const Color(0xFF244CAA),
+    primaryPressed: const Color(0xFF244CAA),
+    primarySubtle: const Color(0xFFE4EBF7),
+    accent: const Color(0xFF315FCB),
+    focusRing: const Color(0xFF315FCB),
+    disabledBackground: const Color(0xFFE3EAF7),
+    disabledForeground: const Color(0xFF4E608D),
+    success: const Color(0xFF116443),
+    successBackground: const Color(0xFFE0F6EC),
+    successForeground: const Color(0xFF116443),
+    warning: const Color(0xFF835219),
+    warningBackground: const Color(0xFFFFF0D8),
+    warningForeground: const Color(0xFF835219),
+    destructive: const Color(0xFFA82B3B),
+    destructiveBackground: const Color(0xFFFFEBEF),
+    destructiveForeground: const Color(0xFFA82B3B),
+  );
+
+  static final UcraftColors softDark = dark.copyWith(
+    background: const Color(0xFF111827),
+    surface: const Color(0xFF1E293B),
+    surfaceSecondary: const Color(0xFF283548),
+    surfaceTertiary: const Color(0xFF334155),
+    border: const Color(0xFF334155),
+    borderStrong: const Color(0xFF64748B),
+    foreground: const Color(0xFFF8FAFC),
+    foregroundSecondary: const Color(0xFFCBD5E1),
+    foregroundMuted: const Color(0xFF94A3B8),
+    primary: const Color(0xFF315FCB),
+    primaryHover: const Color(0xFF244CAA),
+    primaryPressed: const Color(0xFF1D408D),
+    onPrimary: const Color(0xFFFFFFFF),
+    primarySubtle: const Color(0xFF1D3158),
+    accent: const Color(0xFF7AA2FF),
+    focusRing: const Color(0xFF7AA2FF),
+    disabledBackground: const Color(0xFF283548),
+    disabledForeground: const Color(0xFF64748B),
+    success: const Color(0xFF34D399),
+    successBackground: const Color(0xFF133829),
+    successForeground: const Color(0xFF6EE7B7),
+    warning: const Color(0xFFFBBF24),
+    warningBackground: const Color(0xFF3F2E12),
+    warningForeground: const Color(0xFFFDE68A),
+    destructive: const Color(0xFFEF4444),
+    destructiveBackground: const Color(0xFF451A23),
+    destructiveForeground: const Color(0xFFFDA4AF),
+    info: const Color(0xFF60A5FA),
+    infoBackground: const Color(0xFF1E3558),
+    infoForeground: const Color(0xFFBFDBFE),
+  );
+
   final Color background;
   final Color surface;
   final Color surfaceSecondary;

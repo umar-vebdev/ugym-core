@@ -4,7 +4,6 @@ import '../../themes/ucraft_theme.dart';
 import '../../tokens/ucraft_colors.dart';
 import '../../tokens/ucraft_elevation.dart';
 import '../../tokens/ucraft_motion.dart';
-import '../../tokens/ucraft_radius.dart';
 import '../../tokens/ucraft_spacing.dart';
 import '../../tokens/ucraft_typography.dart';
 
@@ -70,12 +69,15 @@ final class UcraftButton extends StatelessWidget {
               : UcraftSpacing.buttonHorizontalPadding,
         ),
       ),
-      shape: const WidgetStatePropertyAll(
-        RoundedRectangleBorder(borderRadius: UcraftRadius.borderSm),
-      ),
+      shape: const WidgetStatePropertyAll(StadiumBorder()),
       elevation: const WidgetStatePropertyAll(0),
       shadowColor: const WidgetStatePropertyAll(Colors.transparent),
-      overlayColor: const WidgetStatePropertyAll(Colors.transparent),
+      overlayColor: WidgetStateProperty.resolveWith((states) {
+        if (states.contains(WidgetState.focused)) {
+          return foregroundColor.withValues(alpha: 0.12);
+        }
+        return Colors.transparent;
+      }),
       backgroundColor: WidgetStateProperty.resolveWith((states) {
         return _resolveBackground(
           colors: colors,
@@ -141,11 +143,21 @@ final class UcraftButton extends StatelessWidget {
       ],
     );
 
-    final Widget button = TextButton(
-      onPressed: isInteractive ? onPressed : (isLoading ? () {} : null),
-      style: style,
-      child: buttonBody,
-    );
+    final action = isInteractive ? onPressed : (isLoading ? () {} : null);
+    final Widget button = switch (variant) {
+      UcraftButtonVariant.primary || UcraftButtonVariant.destructive =>
+        FilledButton(onPressed: action, style: style, child: buttonBody),
+      UcraftButtonVariant.secondary => FilledButton.tonal(
+        onPressed: action,
+        style: style,
+        child: buttonBody,
+      ),
+      UcraftButtonVariant.tertiary => TextButton(
+        onPressed: action,
+        style: style,
+        child: buttonBody,
+      ),
+    };
 
     final Widget sized = SizedBox(
       width: fullWidth ? double.infinity : null,
@@ -187,7 +199,8 @@ final class UcraftButton extends StatelessWidget {
     return switch (variant) {
       UcraftButtonVariant.primary => colors.onPrimary,
       UcraftButtonVariant.secondary => colors.foreground,
-      UcraftButtonVariant.tertiary => colors.primary,
+      UcraftButtonVariant.tertiary =>
+        brightness == Brightness.dark ? colors.accent : colors.primary,
       UcraftButtonVariant.destructive =>
         brightness == Brightness.dark
             ? UcraftBrandColors.midnight

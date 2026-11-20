@@ -47,9 +47,14 @@ void main() {
         ),
       ),
     );
-    final button = find.byType(TextButton);
+    final button = find.byType(FilledButton);
     expect(
-      tester.widget<TextButton>(button).style!.minimumSize!.resolve({})!.height,
+      tester
+          .widget<FilledButton>(button)
+          .style!
+          .minimumSize!
+          .resolve({})!
+          .height,
       36,
     );
     expect(tester.getSize(button).height, 48);
